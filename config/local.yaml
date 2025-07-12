@@ -1,0 +1,6 @@
+env: "local"
+postgres_dsn: "postgresql://myuser:mypassword@postgres:5432/"
+token_ttl: 1h
+grpc:
+  port: 50051
+  timeout: 10h
