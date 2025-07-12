@@ -18,11 +18,9 @@ func main() {
 
 	log.Info("starting application")
 
-	// TODO: logger
+	// TODO: application
 
-	// TODO: app
-
-	// TODO: start app
+	// TODO: start application
 }
 
 func setupLogger(env string) *slog.Logger {

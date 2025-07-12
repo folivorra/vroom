@@ -1,6 +1,9 @@
 env: "local"
-postgres_dsn: "postgresql://myuser:mypassword@postgres:5432/"
+postgres_dsn: "postgresql://vroom:vroom@postgres:5432/"
 token_ttl: 1h
 grpc:
-  port: 50051
+  port: 9090
+  timeout: 10h
+rest:
+  port: 8080
   timeout: 10h

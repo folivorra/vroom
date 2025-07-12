@@ -15,6 +15,11 @@ type Config struct {
 		Port    int           `yaml:"port"`
 		Timeout time.Duration `yaml:"timeout"`
 	}
+
+	Rest struct {
+		Port    int           `yaml:"port"`
+		Timeout time.Duration `yaml:"timeout"`
+	}
 }
 
 func MustLoad() *Config {
