@@ -1,9 +1,12 @@
 package main
 
 import (
-	"github.com/folivorra/vroom/internal/config"
+	"context"
 	"log/slog"
 	"os"
+
+	"github.com/folivorra/vroom/application"
+	"github.com/folivorra/vroom/internal/config"
 )
 
 const (
@@ -12,15 +15,18 @@ const (
 )
 
 func main() {
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
 	cfg := config.MustLoad()
 
 	log := setupLogger(cfg.Env)
 
-	log.Info("starting application")
+	app := application.NewApp(ctx, log)
+	defer app.Shutdown()
 
-	// TODO: application
-
-	// TODO: start application
+	app.Start()
+	app.Wait()
 }
 
 func setupLogger(env string) *slog.Logger {
