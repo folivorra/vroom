@@ -26,11 +26,12 @@ func main() {
 	app := application.NewApp(ctx, log)
 	defer app.Shutdown()
 
-	ps, err := postgres.NewPostgres(ctx, app, cfg.PostgresDsn)
+	_, err := postgres.NewPostgres(ctx, app, cfg.PostgresDsn)
 	if err != nil {
 		log.Error(err.Error())
 		return
 	}
+	log.Info("postgres connected")
 
 	app.Run()
 }

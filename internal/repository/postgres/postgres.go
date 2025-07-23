@@ -5,6 +5,8 @@ import (
 	"database/sql"
 	"github.com/folivorra/vroom/application"
 	"time"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
 func NewPostgres(ctx context.Context, app *application.App, dsn string) (*sql.DB, error) {
