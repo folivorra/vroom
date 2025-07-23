@@ -25,8 +25,7 @@ func main() {
 	app := application.NewApp(ctx, log)
 	defer app.Shutdown()
 
-	app.Start()
-	app.Wait()
+	app.Run()
 }
 
 func setupLogger(env string) *slog.Logger {

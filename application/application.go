@@ -26,7 +26,7 @@ func NewApp(parent context.Context, log *slog.Logger) *App {
 	}
 }
 
-func (a *App) Start() {
+func (a *App) Run() {
 	const op = "application.Start"
 
 	log := a.log.With(slog.String("op", op))
@@ -34,9 +34,7 @@ func (a *App) Start() {
 	log.Info("starting application")
 
 	signal.Notify(a.shutdownCh, os.Interrupt, syscall.SIGTERM)
-}
 
-func (a *App) Wait() {
 	<-a.shutdownCh
 }
 
