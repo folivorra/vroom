@@ -46,8 +46,14 @@ func (a *App) Shutdown() {
 	log.Info("shutting down application...")
 
 	for i := len(a.cleanup); i >= 0; i-- {
-		a.cleanup[i](a.ctx)
+		if err := a.cleanup[i](a.ctx); err != nil {
+			log.Error(err.Error())
+		}
 	}
 
 	log.Info("shutdown application completed")
+}
+
+func (a *App) RegisterCleanup(f func(context.Context) error) {
+	a.cleanup = append(a.cleanup, f)
 }

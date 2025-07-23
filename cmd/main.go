@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/folivorra/vroom/internal/repository/postgres"
 	"log/slog"
 	"os"
 
@@ -24,6 +25,12 @@ func main() {
 
 	app := application.NewApp(ctx, log)
 	defer app.Shutdown()
+
+	ps, err := postgres.NewPostgres(ctx, app, cfg.PostgresDsn)
+	if err != nil {
+		log.Error(err.Error())
+		return
+	}
 
 	app.Run()
 }
