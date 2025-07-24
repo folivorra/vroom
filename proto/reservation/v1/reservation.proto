@@ -1,0 +1,110 @@
+syntax = "proto3";
+
+package reservation.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "bin/annotations.proto";
+
+option go_package = "github.com/folivorra/vroom/proto/reservation/v1;reservation_v1";
+
+service ReservationService {
+  rpc CreateReservation(CreateReservationRequest) returns (CreateReservationResponse) {
+    option (google.api.http) = {
+      post: "/v1/reservations"
+      body: "*"
+    };
+  }
+
+  rpc ListReservations(ListReservationsRequest) returns (ListReservationsResponse) {
+    option (google.api.http) = {
+      get: "/v1/reservations"
+    };
+  }
+
+  rpc GetReservation(GetReservationRequest) returns (GetReservationResponse) {
+    option (google.api.http) = {
+      get: "/v1/reservations/{id}"
+    };
+  }
+
+  rpc CompleteReservation(CompleteReservationRequest) returns (CompleteReservationResponse) {
+    option (google.api.http) = {
+      post: "/v1/reservations/{id}/complete"
+      body: "*"
+    };
+  }
+
+  rpc CancelReservation(CancelReservationRequest) returns (CancelReservationResponse) {
+    option (google.api.http) = {
+      post: "/v1/reservations/{id}/cancel"
+      body: "*"
+    };
+  }
+}
+
+enum ReservationStatus {
+  RESERVATION_STATUS_UNSPECIFIED = 0;
+  RESERVATION_STATUS_ACTIVE = 1;
+  RESERVATION_STATUS_COMPLETED = 2;
+  RESERVATION_STATUS_CANCELLED = 3;
+}
+
+message Point {
+  double lat = 1;
+  double lng = 2;
+}
+
+message Reservation {
+  int64 id = 1;
+  int64 customer_id = 2;
+  int64 car_id = 3;
+  google.protobuf.Timestamp start_at = 4;
+  google.protobuf.Timestamp end_at = 5;
+  Point start_location = 6;
+  Point end_location = 7;
+  string total_price = 8;
+  ReservationStatus status = 9;
+}
+
+message CreateReservationRequest {
+  int64 car_id = 1;
+  google.protobuf.Timestamp start_at = 2;
+  google.protobuf.Timestamp end_at = 3;
+  Point start_location = 4;
+}
+
+message CreateReservationResponse {
+  int64 reservation_id = 1;
+}
+
+message ListReservationsRequest {}
+
+message ListReservationsResponse {
+  repeated Reservation reservations = 1;
+}
+
+message GetReservationRequest {
+  int64 id = 1;
+}
+
+message GetReservationResponse {
+  Reservation reservation = 1;
+}
+
+message CompleteReservationRequest {
+  int64 id = 1;
+  Point end_location = 2;
+}
+
+message CompleteReservationResponse {
+  google.protobuf.Empty empty = 1;
+}
+
+message CancelReservationRequest {
+  int64 id = 1;
+}
+
+message CancelReservationResponse {
+  google.protobuf.Empty empty = 1;
+}
