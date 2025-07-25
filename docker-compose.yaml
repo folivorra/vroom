@@ -15,15 +15,30 @@ services:
       - app-network
 
   postgres:
-    image: postgres:17-alpine
+    image: postgis/postgis:16-3.4
     environment:
-      - POSTGRES_USER=vroom
       - POSTGRES_PASSWORD=vroom
     container_name: postgres
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  goose:
+    build: ./tools/goose
+    container_name: goose
+    depends_on:
+      - postgres
+    volumes:
+      - ./migrations:/migrations
+    entrypoint: ["/goose/entrypoint.sh"]
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: vroom
     networks:
       - app-network
 
