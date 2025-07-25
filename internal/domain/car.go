@@ -1,5 +1,7 @@
 package domain
 
+import "github.com/shopspring/decimal"
+
 type CarStatus string
 
 const (
@@ -55,4 +57,10 @@ type CarModel struct {
 	Class    ClassType `json:"class"`
 	Seats    int       `json:"seats"`
 	FuelType FuelType  `json:"fuel_type"`
+}
+
+type ClassTariffs struct {
+	Id             int64           `json:"id"`
+	ClassType      ClassType       `json:"class_type"`
+	PricePerMinute decimal.Decimal `json:"price_per_minute"`
 }

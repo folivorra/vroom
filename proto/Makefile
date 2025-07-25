@@ -2,6 +2,7 @@ BUF_VERSION                     = v1.54.0
 PROTOC_GEN_GO_VERSION           = v1.36.6
 PROTOC_GEN_GO_GRPC_VERSION      = v1.5.1
 PROTOC_GEN_GRPC_GATEWAY_VERSION = v2.26.3
+PROTOC_GEN_OPENAPIV2_VERSION    = v2.26.3
 PROTOC_GEN_VALIDATE_VERSION     = v1.2.1
 
 ROOT_DIR 					= $(patsubst %/,%,$(dir $(realpath $(lastword $(MAKEFILE_LIST)))))
@@ -11,11 +12,12 @@ GEN_DIR						= /gen
 PROTOC_GEN_GO    			= $(BIN_DIR)/protoc-gen-go
 PROTOC_GEN_GO_GRPC 			= $(BIN_DIR)/protoc-gen-go-grpc
 PROTOC_GEN_GRPC_GATEWAY     = $(BIN)/protoc-gen-grpc-gateway
+PROTOC_GEN_OPENAPIV2        = $(BIN)/protoc-gen-openapiv2
 PROTOC_GEN_VALIDATE         = $(BIN)/protoc-gen-validate
 
 .PHONY: all gen clean
 
-all: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_GRPC_GATEWAY) $(PROTOC_GEN_VALIDATE)
+all: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC) $(PROTOC_GEN_GRPC_GATEWAY) $(PROTOC_GEN_OPENAPIV2)
 
 # ---------- buf --------------------------------------------------------------
 $(BUF):
@@ -40,6 +42,11 @@ $(PROTOC_GEN_GRPC_GATEWAY):
 	@mkdir -p $(BIN_DIR)
 	@echo "⏬  installing protoc-gen-grpc-gateway $(PROTOC_GEN_GRPC_GATEWAY_VERSION)"
 	@GOBIN=$(BIN_DIR) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@$(PROTOC_GEN_GRPC_GATEWAY_VERSION)
+
+$(PROTOC_GEN_OPENAPIV2):
+	@mkdir -p $(BIN_DIR)
+	@echo "⏬  installing protoc-gen-openapiv2 $(PROTOC_GEN_OPENAPIV2_VERSION)"
+	@GOBIN=$(BIN_DIR) go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@$(PROTOC_GEN_OPENAPIV2_VERSION)
 
 # ---------- генерация через buf ----------------------------------------------
 gen-buf: $(BUF) $(PROTOC_GEN_GO) $(PROTOC_GEN_GO_GRPC)

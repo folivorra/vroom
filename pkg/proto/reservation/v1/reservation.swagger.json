@@ -1,0 +1,349 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "reservation/v1/reservation.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ReservationService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/reservations": {
+      "get": {
+        "operationId": "ReservationService_ListReservations",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ListReservationsResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "ReservationService"
+        ]
+      },
+      "post": {
+        "operationId": "ReservationService_CreateReservation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CreateReservationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/v1CreateReservationRequest"
+            }
+          }
+        ],
+        "tags": [
+          "ReservationService"
+        ]
+      }
+    },
+    "/v1/reservations/{id}": {
+      "get": {
+        "operationId": "ReservationService_GetReservation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1GetReservationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "ReservationService"
+        ]
+      }
+    },
+    "/v1/reservations/{id}/cancel": {
+      "post": {
+        "operationId": "ReservationService_CancelReservation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CancelReservationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReservationServiceCancelReservationBody"
+            }
+          }
+        ],
+        "tags": [
+          "ReservationService"
+        ]
+      }
+    },
+    "/v1/reservations/{id}/complete": {
+      "post": {
+        "operationId": "ReservationService_CompleteReservation",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1CompleteReservationResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ReservationServiceCompleteReservationBody"
+            }
+          }
+        ],
+        "tags": [
+          "ReservationService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "ReservationServiceCancelReservationBody": {
+      "type": "object"
+    },
+    "ReservationServiceCompleteReservationBody": {
+      "type": "object",
+      "properties": {
+        "endLocation": {
+          "$ref": "#/definitions/v1Point"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1CancelReservationResponse": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    "v1CompleteReservationResponse": {
+      "type": "object",
+      "properties": {
+        "empty": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    },
+    "v1CreateReservationRequest": {
+      "type": "object",
+      "properties": {
+        "carId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "startAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "startLocation": {
+          "$ref": "#/definitions/v1Point"
+        }
+      }
+    },
+    "v1CreateReservationResponse": {
+      "type": "object",
+      "properties": {
+        "reservationId": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "v1GetReservationResponse": {
+      "type": "object",
+      "properties": {
+        "reservation": {
+          "$ref": "#/definitions/v1Reservation"
+        }
+      }
+    },
+    "v1ListReservationsResponse": {
+      "type": "object",
+      "properties": {
+        "reservations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1Reservation"
+          }
+        }
+      }
+    },
+    "v1Point": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "format": "double"
+        },
+        "lng": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "v1Reservation": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "int64"
+        },
+        "customerId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "carId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "startAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "startLocation": {
+          "$ref": "#/definitions/v1Point"
+        },
+        "endLocation": {
+          "$ref": "#/definitions/v1Point"
+        },
+        "totalPrice": {
+          "type": "string"
+        },
+        "status": {
+          "$ref": "#/definitions/v1ReservationStatus"
+        }
+      }
+    },
+    "v1ReservationStatus": {
+      "type": "string",
+      "enum": [
+        "RESERVATION_STATUS_UNSPECIFIED",
+        "RESERVATION_STATUS_ACTIVE",
+        "RESERVATION_STATUS_COMPLETED",
+        "RESERVATION_STATUS_CANCELLED"
+      ],
+      "default": "RESERVATION_STATUS_UNSPECIFIED"
+    }
+  }
+}
