@@ -1,5 +1,5 @@
 env: "local"
-postgres_dsn: "postgresql://vroom:vroom@postgres:5432/"
+postgres_dsn: "postgres://postgres:vroom@postgres:5432/?sslmode=disable"
 token_ttl: 1h
 grpc:
   port: 9090
