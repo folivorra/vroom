@@ -5,16 +5,16 @@ import (
 	"time"
 )
 
-type StatusReservation string
+type ReservationStatus string
 
 const (
-	StatusActive    StatusReservation = "active"
-	StatusCompleted StatusReservation = "completed"
-	StatusCancelled StatusReservation = "cancelled"
+	ReservationStatusActive    ReservationStatus = "active"
+	ReservationStatusCompleted ReservationStatus = "completed"
+	ReservationStatusCancelled ReservationStatus = "cancelled"
 )
 
-func (r StatusReservation) IsValid() bool {
-	return r == StatusActive || r == StatusCompleted || r == StatusCancelled
+func (r ReservationStatus) IsValid() bool {
+	return r == ReservationStatusActive || r == ReservationStatusCompleted || r == ReservationStatusCancelled
 }
 
 type Reservation struct {
@@ -26,5 +26,5 @@ type Reservation struct {
 	StartLocation Point             `json:"start_location"`
 	EndLocation   Point             `json:"end_location"`
 	TotalPrice    decimal.Decimal   `json:"total_price"`
-	Status        StatusReservation `json:"status"`
+	Status        ReservationStatus `json:"status"`
 }

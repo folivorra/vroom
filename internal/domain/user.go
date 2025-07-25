@@ -1,20 +1,19 @@
 package domain
 
-type Role string
+type RoleType string
 
 const (
-	RoleAdmin Role = "admin"
-	RoleUser  Role = "user"
+	RoleTypeAdmin    RoleType = "admin"
+	RoleTypeCustomer RoleType = "customer"
 )
 
 type User struct {
-	Id           int64  `json:"id"`
-	Email        string `json:"email"`
-	PasswordHash string `json:"-"`
-	Role         Role   `json:"role"`
-	Revoked      bool   `json:"revoked"`
+	Id           int64    `json:"id"`
+	Email        string   `json:"email"`
+	PasswordHash string   `json:"-"`
+	Role         RoleType `json:"role"`
 }
 
-func (r Role) IsValid() bool {
-	return r == RoleAdmin || r == RoleUser
+func (r RoleType) IsValid() bool {
+	return r == RoleTypeAdmin || r == RoleTypeCustomer
 }

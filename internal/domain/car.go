@@ -1,20 +1,14 @@
 package domain
 
-import "fmt"
-
-type StatusCar string
+type CarStatus string
 
 const (
-	StatusAvailable StatusCar = "available"
-	StatusRented    StatusCar = "rented"
+	CarStatusAvailable CarStatus = "available"
+	CarStatusRented    CarStatus = "rented"
 )
 
-func (s StatusCar) IsValid() bool {
-	return s == StatusAvailable || s == StatusRented
-}
-
-func (p Point) ToWKT() string {
-	return fmt.Sprintf("POINT(%f %f)", p.Lat, p.Lng)
+func (s CarStatus) IsValid() bool {
+	return s == CarStatusAvailable || s == CarStatusRented
 }
 
 type Car struct {
@@ -22,7 +16,7 @@ type Car struct {
 	Vin        string    `json:"vin"`
 	Year       int       `json:"year"`
 	Mileage    int       `json:"mileage"`
-	Status     StatusCar `json:"status"`
+	Status     CarStatus `json:"status"`
 	CarModelId int64     `json:"car_model_id"`
 	Location   Point     `json:"location"`
 }
@@ -30,19 +24,35 @@ type Car struct {
 type FuelType string
 
 const (
-	FuelTypeGas    FuelType = "gas"
-	FuelTypeDiesel FuelType = "diesel"
+	FuelTypeGas      FuelType = "gas"
+	FuelTypeDiesel   FuelType = "diesel"
+	FuelTypeElectric FuelType = "electric"
 )
 
 func (ft FuelType) IsValid() bool {
-	return ft == FuelTypeGas || ft == FuelTypeDiesel
+	return ft == FuelTypeGas || ft == FuelTypeDiesel || ft == FuelTypeElectric
+}
+
+type ClassType string
+
+const (
+	ClassTypeEconomy  ClassType = "economy"
+	ClassTypeStandard ClassType = "standard"
+	ClassTypeComfort  ClassType = "comfort"
+	ClassTypeBusiness ClassType = "business"
+	ClassTypeSUV      ClassType = "suv"
+	ClassTypeCargo    ClassType = "cargo"
+)
+
+func (ct ClassType) IsValid() bool {
+	return ct == ClassTypeCargo || ct == ClassTypeComfort || ct == ClassTypeStandard || ct == ClassTypeEconomy || ct == ClassTypeBusiness || ct == ClassTypeSUV
 }
 
 type CarModel struct {
-	Id       int64    `json:"id"`
-	Brand    string   `json:"brand"`
-	Model    string   `json:"model"`
-	Class    string   `json:"class"`
-	Seats    int      `json:"seats"`
-	FuelType FuelType `json:"fuel_type"`
+	Id       int64     `json:"id"`
+	Brand    string    `json:"brand"`
+	Model    string    `json:"model"`
+	Class    ClassType `json:"class"`
+	Seats    int       `json:"seats"`
+	FuelType FuelType  `json:"fuel_type"`
 }
