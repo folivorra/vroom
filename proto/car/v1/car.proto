@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package car.v1;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+import "bin/annotations.proto";
+
+option go_package = "github.com/folivorra/vroom/proto/car/v1;car_v1";
+
+enum CarStatus {
+  CAR_STATUS_UNSPECIFIED = 0;
+  CAR_STATUS_AVAILABLE = 1;
+  CAR_STATUS_RENTED = 2;
+}
+
+message Point {
+  double lat = 1;
+  double lng = 2;
+}
+
+message Car {
+  int64 id = 1;
+  string vin = 2;
+  int64 year = 3;
+  int64 mileage = 4;
+  CarStatus status = 5;
+  int64 car_model_id = 6;
+  Point location = 7;
+}
+
+enum ClassType {
+  CLASS_TYPE_UNSPECIFIED = 0;
+  CLASS_TYPE_ECONOMY = 1;
+  CLASS_TYPE_STANDARD = 2;
+  CLASS_TYPE_COMFORT = 3;
+  CLASS_TYPE_BUSINESS = 4;
+  CLASS_TYPE_SUV = 5;
+  CLASS_TYPE_CARGO= 6;
+}
+
+enum FuelType {
+  FUEL_TYPE_UNSPECIFIED = 0;
+  FUEL_TYPE_GAS = 1;
+  FUEL_TYPE_DIESEL = 2;
+  FUEL_TYPE_ELECTRIC = 3;
+}
+
+message CarModel {
+  int64 id = 1;
+  string brand = 2;
+  string model = 3;
+  ClassType class = 4;
+  int64 seats = 5;
+  FuelType fuel_type = 6;
+}
+
+message ClassTariffs {
+  int64 id = 1;
+  ClassType class_type = 2;
+  string price_per_minute = 3;
+}
