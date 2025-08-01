@@ -45,6 +45,8 @@ func (a *App) Shutdown() {
 
 	log.Info("shutting down application...")
 
+	a.cancel()
+
 	for i := len(a.cleanup); i >= 0; i-- {
 		if err := a.cleanup[i](a.ctx); err != nil {
 			log.Error(err.Error())
